@@ -1,0 +1,8 @@
+"main.obj",
+"uart.obj",
+"wimiDevTimerStruct.obj",
+"wimiDevTimerManger.obj",
+"smaller.obj",
+"NRF24L01.obj" 
+TO "smaller" Rtx51Tiny 
+RAMSIZE(256) 

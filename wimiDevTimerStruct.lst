@@ -1,0 +1,25 @@
+C51 COMPILER V9.00   WIMIDEVTIMERSTRUCT                                                    03/03/2017 21:32:05 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE WIMIDEVTIMERSTRUCT
+OBJECT MODULE PLACED IN wimiDevTimerStruct.obj
+COMPILER INVOKED BY: I:\program\keil\C51\BIN\C51.EXE class\wimiDevTimerStruct.c COMPACT ROM(COMPACT) BROWSE DEBUG OBJECT
+                    -EXTEND PRINT(.\wimiDevTimerStruct.lst) OBJECT(wimiDevTimerStruct.obj)
+
+line level    source
+
+   1           #include"wimiDevTimerStruct.h"
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

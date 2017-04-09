@@ -1,0 +1,105 @@
+C51 COMPILER V9.00   SMALLER                                                               03/03/2017 21:32:05 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE SMALLER
+OBJECT MODULE PLACED IN smaller.obj
+COMPILER INVOKED BY: I:\program\keil\C51\BIN\C51.EXE class\smaller.c COMPACT ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND PRIN
+                    -T(.\smaller.lst) OBJECT(smaller.obj)
+
+line level    source
+
+   1          #include"smaller.h"
+   2          
+   3          TIMER timer1;
+   4          TIMER timer2;
+   5          TIMER timer4;
+   6          unsigned char issend = 1;
+   7          unsigned char id = 1;
+   8          unsigned int session = 1;
+   9          
+  10          void smallerinit()
+  11          {       
+  12   1              TimerMangerInit(&_tmg);
+  13   1              DumpTimerManager(&_tmg);
+  14   1              CreateTimer(&_tmg,1,1,&timer1callback,&timer1); 
+  15   1              DumpTimerManager(&_tmg);        
+  16   1              if (issend)
+  17   1              {
+  18   2                      CreateTimer(&_tmg,2,5,&timer2callback,&timer2);
+  19   2                      CreateTimer(&_tmg,4,10,&timer4callback,&timer4);
+  20   2              }
+  21   1              else
+  22   1              {
+  23   2                      CreateTimer(&_tmg,2,1,&timer3callback,&timer2);
+  24   2              }
+  25   1              SendString("smallerinit\r\n");
+  26   1              DumpTimerManager(&_tmg);
+  27   1      }
+  28          
+  29          void timer1callback()
+  30          {
+  31   1               SendString("timer1\r\n");
+  32   1               NRF24L01Int();
+  33   1               EnableTimer(&_tmg,1,0);
+  34   1      }
+  35          void timer2callback()
+  36          {         
+  37   1              //48,49,50..都会溢出
+  38   1              char dat1[4]={'5','5','5','5'};
+  39   1              //unsigned char id = 1;
+  40   1              dat1[0] = id+'0';       
+  41   1              dat1[1] = session + '0';        
+  42   1               dat1[2] = 9 + '0';
+  43   1               dat1[3] = 0;   
+  44   1      //       SendString(dat1);      
+  45   1      //       SendString("\r\n");
+  46   1               NRFSetTxMode(dat1);//内存溢出
+  47   1               while(CheckACK());     //检测是否发送完毕  
+  48   1               SendString("timer2:\r\n");
+  49   1      //       SendString(dat1);
+  50   1      //       SendString("\r\n");
+  51   1      }
+  52          void timer3callback()
+  53          {       
+  54   1              unsigned char index = 0;
+C51 COMPILER V9.00   SMALLER                                                               03/03/2017 21:32:05 PAGE 2   
+
+  55   1              //SendString("timer3:");
+  56   1              NRFSetRXMode();//设置为接收模式
+  57   1              GetDate();//开始接受数
+  58   1              RevTempDate[4]=0;
+  59   1              SendString(RevTempDate);
+  60   1              SendString("\r\n");
+  61   1      //      if(1)
+  62   1      //      {
+  63   1      //              
+  64   1      //      }
+  65   1              for(index=0;index<4;index++)
+  66   1              {
+  67   2                      RevTempDate[index] = 0;
+  68   2              }
+  69   1      }
+  70          void timer4callback()
+  71          {        
+  72   1              session++;
+  73   1      //      dat1[0] = session;
+  74   1               if (session > 20)
+  75   1                      {
+  76   2                              session=1;
+  77   2                      }
+  78   1               SendString("timer4\r\n");
+  79   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    377    ----
+   CONSTANT SIZE    =     49    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =     25       4
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
